@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import axios from 'axios';
+import authService from '../services/auth.service';
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -20,15 +20,15 @@ export const useAuthStore = defineStore('auth', {
       this.error = null;
       
       try {
-        const response = await axios.post('http://localhost:8000/api/login', credentials);
+        const data = await authService.login(credentials);
         
-        this.token = response.data.token;
-        this.user = response.data.user;
+        this.token = data.token;
+        this.user = data.user;
         
         localStorage.setItem('token', this.token);
         localStorage.setItem('user', JSON.stringify(this.user));
         
-        axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
+        authService.setAuthHeader(this.token);
         
         return true;
       } catch (error) {
@@ -45,9 +45,9 @@ export const useAuthStore = defineStore('auth', {
       this.error = null;
       
       try {
-        const response = await axios.post('http://localhost:8000/api/register', userData);
+        const data = await authService.register(userData);
         
-        if (response.data.success) {
+        if (data.success) {
           return await this.login({
             email: userData.email,
             password: userData.password
@@ -70,7 +70,7 @@ export const useAuthStore = defineStore('auth', {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       
-      delete axios.defaults.headers.common['Authorization'];
+      authService.setAuthHeader(null);
     }
   }
 });
