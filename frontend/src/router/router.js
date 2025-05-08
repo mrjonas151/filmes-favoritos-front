@@ -6,6 +6,7 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import MovieDetails from '../views/MovieDetails.vue'
 import NotFound from '../views/NotFound.vue'
+import Favorites from '../views/Favorites.vue'
 
 const routes = [
   {
@@ -34,7 +35,13 @@ const routes = [
     path: '/:pathMatch(.*)*',
     name: 'not-found',
     component: NotFound
-  }
+  },
+
+  {
+    path: '/favorites',
+    name: 'favorites',
+    component: Favorites
+  },
 ]
 
 const router = createRouter({
