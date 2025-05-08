@@ -12,7 +12,8 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: Home,
+    meta: { requiresAuth: true }
   },
   {
     path: '/login',
@@ -29,7 +30,8 @@ const routes = [
   {
     path: '/movie/:id',
     name: 'movie-details',
-    component: MovieDetails
+    component: MovieDetails,
+    meta: { requiresAuth: true }
   },
   {
     path: '/:pathMatch(.*)*',
@@ -40,7 +42,8 @@ const routes = [
   {
     path: '/favorites',
     name: 'favorites',
-    component: Favorites
+    component: Favorites,
+    meta: { requiresAuth: true }
   },
 ]
 
